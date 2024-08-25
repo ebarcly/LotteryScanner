@@ -52,6 +52,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Enrique Barclay - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+Enrique Barclay - [@enriquebarclay](https://twitter.com/enriquebarclay) - enriquebarclayrd @ gmaildotcom
 
 Project Link: [https://github.com/ebarcly/lottery-scanner](https://github.com/ebarcly/lottery-scanner)
