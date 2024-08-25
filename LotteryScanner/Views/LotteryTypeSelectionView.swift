@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct LotteryTypeSelectionView: View {
-    @Binding var selectedLotteryType: String
-    let lotteryTypes = ["Powerball", "Mega Millions"]
+    @Binding var selectedLotteryType: LotteryType
     
     var body: some View {
-        Text("Select your Lottery")
-            .padding(.top, 24)
-            .font(.title2)
-        HStack(spacing: 48) {
-            ForEach(lotteryTypes, id: \.self) { lottery in
-                Image(lottery)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: selectedLotteryType == lottery ? 110 : 100,
-                           height: selectedLotteryType == lottery ? 70 : 60)
-                    .border(selectedLotteryType == lottery ? Color.blue : Color.clear, width: 3)
-                    .onTapGesture {
-                        withAnimation {
-                            selectedLotteryType = lottery
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Select your Lottery")
+                .font(.headline)
+            
+            HStack(spacing: 16) {
+                ForEach(LotteryType.allCases, id: \.self) { lotteryType in
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            selectedLotteryType = lotteryType
                         }
+                        HapticFeedback.playSelection()
+                    }) {
+                        Image(lotteryType.rawValue)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 40)
+                            .padding(8)
+                            .background(selectedLotteryType == lotteryType ? Color.blue.opacity(0.1) : Color.clear)
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(selectedLotteryType == lotteryType ? Color.blue : Color.gray, lineWidth: 2)
+                            )
+                            .scaleEffect(selectedLotteryType == lotteryType ? 1.05 : 1.0)
                     }
-                    .padding(.top, 24)
+                }
             }
         }
     }
-    
 }

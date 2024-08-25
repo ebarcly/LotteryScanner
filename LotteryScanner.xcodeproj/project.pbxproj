@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		5A1691CF2BD4DA5800565FF4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1691CE2BD4DA5800565FF4 /* APIManager.swift */; };
+		5A2E168D2C7B8CD6000E27DF /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2E168C2C7B8CD6000E27DF /* ContentViewModel.swift */; };
+		5A2E168F2C7B9836000E27DF /* DateSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2E168E2C7B9836000E27DF /* DateSelectionView.swift */; };
+		5A2E16912C7BA76C000E27DF /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2E16902C7BA76C000E27DF /* HapticFeedback.swift */; };
 		5A80F3E52BDC2C13008F7415 /* LotteryTypeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80F3E42BDC2C13008F7415 /* LotteryTypeSelectionView.swift */; };
 		5A80F3E72BDC2C50008F7415 /* TicketNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80F3E62BDC2C50008F7415 /* TicketNumbersView.swift */; };
+		5A97C6902C7BD3CE00AC4C9E /* LotteryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97C68F2C7BD3CE00AC4C9E /* LotteryType.swift */; };
 		5ADC62002BD436530096A6C2 /* LotteryScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC61FF2BD436530096A6C2 /* LotteryScannerApp.swift */; };
 		5ADC62022BD436530096A6C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC62012BD436530096A6C2 /* ContentView.swift */; };
 		5ADC62042BD436550096A6C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ADC62032BD436550096A6C2 /* Assets.xcassets */; };
@@ -19,12 +23,16 @@
 
 /* Begin PBXFileReference section */
 		5A1691CE2BD4DA5800565FF4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		5A4A6E562BDB626E0083D48A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5A2E168C2C7B8CD6000E27DF /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		5A2E168E2C7B9836000E27DF /* DateSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectionView.swift; sourceTree = "<group>"; };
+		5A2E16902C7BA76C000E27DF /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		5A4A6E562BDB626E0083D48A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A80F3E42BDC2C13008F7415 /* LotteryTypeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotteryTypeSelectionView.swift; sourceTree = "<group>"; };
 		5A80F3E62BDC2C50008F7415 /* TicketNumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketNumbersView.swift; sourceTree = "<group>"; };
+		5A97C68F2C7BD3CE00AC4C9E /* LotteryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotteryType.swift; sourceTree = "<group>"; };
 		5ADC61FC2BD436530096A6C2 /* LotteryScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LotteryScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ADC61FF2BD436530096A6C2 /* LotteryScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotteryScannerApp.swift; sourceTree = "<group>"; };
-		5ADC62012BD436530096A6C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5ADC62012BD436530096A6C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5ADC62032BD436550096A6C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5ADC62062BD436550096A6C2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5ADC620D2BD460500096A6C2 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
@@ -41,6 +49,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A2E16922C7BD190000E27DF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5A2E16902C7BA76C000E27DF /* HapticFeedback.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		5A56CFF42C58563B0078D042 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5ADC61FF2BD436530096A6C2 /* LotteryScannerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5A56CFF72C594E710078D042 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5A2E168C2C7B8CD6000E27DF /* ContentViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		5A80F3E22BDC2BD5008F7415 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -48,16 +80,25 @@
 				5ADC620D2BD460500096A6C2 /* ScannerView.swift */,
 				5A80F3E42BDC2C13008F7415 /* LotteryTypeSelectionView.swift */,
 				5A80F3E62BDC2C50008F7415 /* TicketNumbersView.swift */,
+				5A2E168E2C7B9836000E27DF /* DateSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5A80F3E32BDC2BDE008F7415 /* API */ = {
+		5A80F3E32BDC2BDE008F7415 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				5A1691CE2BD4DA5800565FF4 /* APIManager.swift */,
 			);
-			path = API;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5A97C6912C7BD40700AC4C9E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5A97C68F2C7BD3CE00AC4C9E /* LotteryType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5ADC61F32BD436530096A6C2 = {
@@ -79,22 +120,25 @@
 		5ADC61FE2BD436530096A6C2 /* LotteryScanner */ = {
 			isa = PBXGroup;
 			children = (
-				5A4A6E562BDB626E0083D48A /* Info.plist */,
-				5ADC61FF2BD436530096A6C2 /* LotteryScannerApp.swift */,
+				5A56CFF42C58563B0078D042 /* App */,
 				5A80F3E22BDC2BD5008F7415 /* Views */,
-				5A80F3E32BDC2BDE008F7415 /* API */,
-				5ADC62032BD436550096A6C2 /* Assets.xcassets */,
-				5ADC62052BD436550096A6C2 /* Preview Content */,
+				5A56CFF72C594E710078D042 /* ViewModels */,
+				5A97C6912C7BD40700AC4C9E /* Models */,
+				5A80F3E32BDC2BDE008F7415 /* Services */,
+				5A2E16922C7BD190000E27DF /* Utilities */,
+				5ADC62052BD436550096A6C2 /* Resources */,
 			);
 			path = LotteryScanner;
 			sourceTree = "<group>";
 		};
-		5ADC62052BD436550096A6C2 /* Preview Content */ = {
+		5ADC62052BD436550096A6C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5ADC62032BD436550096A6C2 /* Assets.xcassets */,
 				5ADC62062BD436550096A6C2 /* Preview Assets.xcassets */,
+				5A4A6E562BDB626E0083D48A /* Info.plist */,
 			);
-			path = "Preview Content";
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,12 +211,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A2E168D2C7B8CD6000E27DF /* ContentViewModel.swift in Sources */,
 				5A1691CF2BD4DA5800565FF4 /* APIManager.swift in Sources */,
 				5ADC620E2BD460500096A6C2 /* ScannerView.swift in Sources */,
 				5ADC62022BD436530096A6C2 /* ContentView.swift in Sources */,
 				5ADC62002BD436530096A6C2 /* LotteryScannerApp.swift in Sources */,
 				5A80F3E52BDC2C13008F7415 /* LotteryTypeSelectionView.swift in Sources */,
+				5A2E16912C7BA76C000E27DF /* HapticFeedback.swift in Sources */,
+				5A2E168F2C7B9836000E27DF /* DateSelectionView.swift in Sources */,
 				5A80F3E72BDC2C50008F7415 /* TicketNumbersView.swift in Sources */,
+				5A97C6902C7BD3CE00AC4C9E /* LotteryType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +279,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -288,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

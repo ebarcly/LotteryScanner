@@ -9,102 +9,190 @@ import SwiftUI
 import VisionKit
 import Vision
 
-/// A view that manages the camera interface to scan documents and recognize text from lottery tickets.
 struct ScannerView: UIViewControllerRepresentable {
+    @Binding var recognizedPlays: [[String]]
+    @Binding var scanResult: ScanResult
     @Environment(\.presentationMode) var presentationMode
-    @Binding var recognizedPlays: [[String]]  // Holds the recognized plays from the scanned ticket
     
-    /// Creates the camera view controller and sets the delegate.
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
         let controller = VNDocumentCameraViewController()
         controller.delegate = context.coordinator
         return controller
     }
     
-    /// Required by the protocol, but not used in this implementation.
     func updateUIViewController(_ uiViewController: VNDocumentCameraViewController, context: Context) {}
     
-    /// Creates a coordinator to handle the camera and text recognition.
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
     
-    /// Coordinator to manage text recognition from the camera input.
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
         var parent: ScannerView
-        private let playRegex = try? NSRegularExpression(pattern: "[A-Z]\\.\\s*((\\d{1,2}\\s+){5}\\d{1,2})")
         
         init(parent: ScannerView) {
             self.parent = parent
         }
         
-        /// Handles the camera view closure and processes each scanned page.
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-            for pageIndex in 0..<scan.pageCount {
-                let image = scan.imageOfPage(at: pageIndex)
-                extractText(from: image)
+            guard scan.pageCount > 0 else {
+                parent.scanResult = .failure("No document scanned")
+                parent.presentationMode.wrappedValue.dismiss()
+                return
             }
-            controller.dismiss(animated: true)
+            
+            let image = scan.imageOfPage(at: 0)
+            recognizeText(in: image)
         }
         
-        /// Processes the image for text extraction using Vision framework.
-        private func extractText(from image: UIImage) {
-            guard let cgImage = image.cgImage else { return }
+        private func recognizeText(in image: UIImage) {
+            guard let cgImage = image.cgImage else {
+                parent.scanResult = .failure("Failed to process image")
+                parent.presentationMode.wrappedValue.dismiss()
+                return
+            }
             
             let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
             let request = VNRecognizeTextRequest { [weak self] request, error in
                 guard let self = self else { return }
-                
                 if let error = error {
-                    print("OCR error: \(error.localizedDescription)")
+                    self.parent.scanResult = .failure("Text recognition failed: \(error.localizedDescription)")
+                    self.parent.presentationMode.wrappedValue.dismiss()
                     return
                 }
                 
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {
-                    print("No OCR results")
+                    self.parent.scanResult = .failure("No text recognized")
+                    self.parent.presentationMode.wrappedValue.dismiss()
                     return
                 }
                 
-                self.processObservations(observations)
-            }
-            request.recognitionLevel = .accurate
-            request.customWords = (0...69).map { String($0) } + (1...26).map { String($0) }
-            request.recognitionLanguages = ["en_US"]
-            request.usesLanguageCorrection = false
-            
-            try? requestHandler.perform([request])
-        }
-        
-        /// Processes OCR observations to extract numbers associated with lottery plays.
-        private func processObservations(_ observations: [VNRecognizedTextObservation]) {
-            var plays = [[String]]()
-            
-            for observation in observations {
-                guard let text = observation.topCandidates(1).first?.string else { continue }
-                if let match = playRegex?.firstMatch(in: text, options: [], range: NSRange(text.startIndex..., in: text)),
-                   let range = Range(match.range(at: 1), in: text) {
-                    let numbersText = String(text[range])
-                    let numbers = numbersText.split(separator: " ").map { String($0) }
-                    if numbers.count == 6 {
-                        plays.append(numbers)
-                    }
-                } else {
-                    print("Skipped text: \(text)")
+                let recognizedText = observations.compactMap { $0.topCandidates(1).first?.string }
+                let plays = self.extractPlays(from: recognizedText)
+                
+                DispatchQueue.main.async {
+                    self.parent.recognizedPlays = plays
+                    self.parent.scanResult = plays.isEmpty ? .failure("No valid plays found") : .success
+                    self.parent.presentationMode.wrappedValue.dismiss()
                 }
             }
             
-            DispatchQueue.main.async {
-                print("Recognized Plays: \(plays)")
-                self.parent.recognizedPlays = plays
+            request.recognitionLevel = .accurate
+            
+            do {
+                try requestHandler.perform([request])
+            } catch {
+                parent.scanResult = .failure("Failed to perform text recognition: \(error.localizedDescription)")
+                parent.presentationMode.wrappedValue.dismiss()
             }
+        }
+        
+        private func extractPlays(from text: [String]) -> [[String]] {
+            // This is a simplified example. You might need to adjust this based on the actual ticket format.
+            let numberPattern = "\\b\\d{1,2}\\b"
+            let regex = try? NSRegularExpression(pattern: numberPattern, options: [])
+            
+            var plays: [[String]] = []
+            var currentPlay: [String] = []
+            
+            for line in text {
+                guard let matches = regex?.matches(in: line, options: [], range: NSRange(location: 0, length: line.utf16.count)) else { continue }
+                
+                for match in matches {
+                    if let range = Range(match.range, in: line) {
+                        let number = String(line[range])
+                        currentPlay.append(number)
+                        
+                        if currentPlay.count == 6 {
+                            plays.append(currentPlay)
+                            currentPlay = []
+                        }
+                    }
+                }
+            }
+            
+            return plays
         }
     }
 }
 
-struct ScannerView_Previews: PreviewProvider {
+enum ScanResult: Equatable {
+    case success
+    case failure(String)
+    
+    static func == (lhs: ScanResult, rhs: ScanResult) -> Bool {
+        switch (lhs, rhs) {
+        case (.success, .success):
+            return true
+        case let (.failure(lhsError), .failure(rhsError)):
+            return lhsError == rhsError
+        default:
+            return false
+        }
+    }
+}
+
+struct ScannerViewWrapper: View {
+    @Binding var recognizedPlays: [[String]]
+    @State private var isShowingScanner = false
+    @State private var scanResult: ScanResult = .success
+    @State private var showingFeedback = false
+    let lotteryType: String
+    
+    var body: some View {
+        VStack {
+            Text("Scan your \(lotteryType) ticket")
+                .font(.title)
+                .padding()
+            
+            Button(action: {
+                isShowingScanner = true
+            }) {
+                Text("Start Scanning")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            
+            if !recognizedPlays.isEmpty {
+                Button(action: checkTicket) {
+                    Text("Check Ticket")
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+            }
+        }
+        .sheet(isPresented: $isShowingScanner) {
+            ScannerView(recognizedPlays: $recognizedPlays, scanResult: $scanResult)
+        }
+        .alert(isPresented: $showingFeedback) {
+            switch scanResult {
+            case .success:
+                return Alert(title: Text("Scan Result"), message: Text("Ticket scanned successfully. You can now check if it's a winner."), dismissButton: .default(Text("OK")))
+            case .failure(let error):
+                return Alert(title: Text("Scan Failed"), message: Text(error), dismissButton: .default(Text("OK")))
+            }
+        }
+    }
+    
+    private func checkTicket() {
+        // This is where you would typically call your API to check if the ticket is a winner
+        // For this example, we'll simulate a response
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let isWinner = Bool.random() // Simulate a random win/loss
+            showingFeedback = true
+            scanResult = isWinner ? .success : .failure("Sorry, this ticket is not a winner.")
+        }
+    }
+}
+
+struct ScannerViewWrapper_Previews: PreviewProvider {
     @State static var recognizedPlays: [[String]] = []
     
     static var previews: some View {
-        ScannerView(recognizedPlays: $recognizedPlays)
+        ScannerViewWrapper(recognizedPlays: $recognizedPlays, lotteryType: "Mega Millions")
     }
 }
