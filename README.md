@@ -32,9 +32,9 @@ An iOS application built with SwiftUI that allows users to scan and check lotter
 2. Open the .xcodeproj file in Xcode
 3. Build and run the project on your simulator or device
 
-## Usage // TODO:
+## Usage:
 
-[Include screenshots or GIFs demonstrating how to use the app]
+![App walkthrough](https://github.com/ebarcly/LotteryScanner/blob/8a51e83aa5d2e3a94255a964450a6dd4911d64d4/app-walkthrough.gif)
 
 ## Architecture
 
