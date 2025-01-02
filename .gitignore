@@ -1,0 +1,50 @@
+# Xcode
+## User settings
+xcuserdata/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Accidental .DS_Store files
+.DS_Store
+
+# Environment variables and secrets
+*.xcconfig
+Config.xcconfig
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+iOSInjectionProject/
+
+# Generated files
+DerivedData/
+build/
+
+# SwiftUI Preview Content
+**/*/Preview Content/app-walkthrough.gif
