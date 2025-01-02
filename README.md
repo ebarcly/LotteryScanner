@@ -2,7 +2,7 @@
 
 A SwiftUI-based iOS application for scanning and checking lottery tickets.
 
-![App usage](https://imgur.com/a/LmFaGl8)
+![App usage](https://imgur.com/a/scanner-LmFaGl8)
 
 ## Features
 
@@ -38,7 +38,7 @@ RAPID_API_KEY = your_api_key_here
 ## API Setup
 
 1. Create an account at [RapidAPI](https://rapidapi.com)
-2. Subscribe to the lottery API services: [Powerball](https://rapidapi.com/avoratechnology/api/powerball) and [Mega Millions] (https://rapidapi.com/avoratechnology/api/mega-millions)
+2. Subscribe to the lottery API services: [Powerball](https://rapidapi.com/avoratechnology/api/powerball) and [Mega Millions](https://rapidapi.com/avoratechnology/api/mega-millions)
 3. Copy your API key
 4. Create the configuration file as described in the installation section
 
