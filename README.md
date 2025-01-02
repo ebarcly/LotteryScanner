@@ -2,7 +2,7 @@
 
 A SwiftUI-based iOS application for scanning and checking lottery tickets.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/LmFaGl8"  ><a href="//imgur.com/a/LmFaGl8">iOS-Lottery-Scanner</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+[App usage](https://imgur.com/UED1i6Z)
 
 ## Features
 
